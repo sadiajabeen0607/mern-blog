@@ -47,7 +47,7 @@ export default function SignUp() {
         <div className="flex-1">
           <Link to="/" className="text-4xl font-bold dark:text-white">
             <span className="px-2.5 py-2 sm:px-2 sm:py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-              Sadia's
+            Sadia&apos;s
             </span>
             Blog
           </Link>
