@@ -9,14 +9,17 @@ import {
 } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 export default function Header() {
   const path = useLocation().pathname;
   const { currentUser } = useSelector((state) => state.user);
-  console.log("currentUser", currentUser);
-  console.log("image", currentUser.profilePicture);
+  const { theme } = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
+  // console.log("currentUser", currentUser);
+  // console.log("image", currentUser.profilePicture);
 
   return (
     <Navbar className="border-b-2">
@@ -36,7 +39,7 @@ export default function Header() {
           placeholder="Search..."
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
-        ></TextInput>
+        ></TextInput> 
       </form>
 
       <Button className="w-12 h-10 lg:hidden " color="gray">
@@ -44,8 +47,13 @@ export default function Header() {
       </Button>
 
       <div className="flex gap-2 md:order-2">
-        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
-          <FaMoon />
+        <Button
+          className="w-12 h-10 hidden sm:inline"
+          color="gray"
+          pill
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {theme === 'light' ? <FaMoon /> : <FaSun size={20} />}
         </Button>
 
         {currentUser ? (
@@ -58,7 +66,9 @@ export default function Header() {
           >
             <Dropdown.Header>
               <span className="text-sm block">@{currentUser.username}</span>
-              <span className="text-sm block font-medium truncate">@{currentUser.email}</span>
+              <span className="text-sm block font-medium truncate">
+                @{currentUser.email}
+              </span>
             </Dropdown.Header>
             <Link to={"/dashboard?tab=profile"}>
               <Dropdown.Item>Profile</Dropdown.Item>
