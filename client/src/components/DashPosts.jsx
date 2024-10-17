@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
   const [userPosts, setUserPosts] = useState([]);
+  const [showMore, setShowMore] = useState(true);
   console.log(userPosts);
 
   useEffect(() => {
@@ -16,6 +17,9 @@ export default function DashPosts() {
 
         if (res.ok) {
           setUserPosts(data.posts);
+          if (data.posts.length < 9) {
+            setShowMore(false);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -26,6 +30,25 @@ export default function DashPosts() {
       fetchPosts();
     }
   }, [currentUser._id]);
+
+  const handleShowMore = async () => {
+    const startIndex = userPosts.length;
+    try {
+      const res = await fetch(
+        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
+      );
+      const data = await res.json();
+
+      if (res.ok) {
+        setUserPosts((prev) => [...prev, ...data.posts]);
+        if (data.posts.length < 9) {
+          setShowMore(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400 dark:scrollbar-track-gray-700 dark:scrollbar-thumb-gray-600">
@@ -58,15 +81,39 @@ export default function DashPosts() {
                     </Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/post/${post.slug}`} className="text-gray-900 dark:text-white font-medium">{post.title}</Link>
+                    <Link
+                      to={`/post/${post.slug}`}
+                      className="text-gray-900 dark:text-white font-medium"
+                    >
+                      {post.title}
+                    </Link>
                   </Table.Cell>
                   <Table.Cell>{post.category}</Table.Cell>
-                  <Table.Cell><span className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span></Table.Cell>
-                  <Table.Cell><Link className="text-teal-500 hover:underline" to={`/update-post/${post._id}`}><span>Edit</span></Link></Table.Cell>
+                  <Table.Cell>
+                    <span className="font-medium text-red-500 hover:underline cursor-pointer">
+                      Delete
+                    </span>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Link
+                      className="text-teal-500 hover:underline"
+                      to={`/update-post/${post._id}`}
+                    >
+                      <span>Edit</span>
+                    </Link>
+                  </Table.Cell>
                 </Table.Row>
               </Table.Body>
             ))}
           </Table>
+          {showMore && (
+            <button
+              onClick={handleShowMore}
+              className="text-sm py-7 text-teal-500 self-center w-full"
+            >
+              Show more
+            </button>
+          )}
         </>
       ) : (
         <p>You have no posts yet!</p>
