@@ -282,12 +282,12 @@ export default function DashProfile() {
         </Alert>
       )}
 
-      <Modal show={showModal} onClose={() => setShowModal(false)} size="md">
+      <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
             <BsExclamationCircle className="h-14 w-14 mx-auto text-gray-400 dark:text-gray-200 mb-4" />
-            <h3 className="mb-5 text-gray-500 dark:gray-400 text-lg">
+            <h3 className="mb-5 text-gray-500 dark:text-gray-400 text-lg">
               Are you sure you want to delete your account?
             </h3>
 
