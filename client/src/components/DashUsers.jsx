@@ -1,8 +1,7 @@
 import { Button, Modal, Table } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 export default function DashUsers() {
   const { currentUser } = useSelector((state) => state.user);
@@ -131,7 +130,7 @@ export default function DashUsers() {
           )}
         </>
       ) : (
-        <p>There is no users yet!</p>
+        <p className="min-h-screen flex items-center justify-center text-red-500 font-medium">There is no users yet!</p>
       )}
 
       <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">

@@ -81,7 +81,7 @@ export default function FooterComponent() {
 
         <Footer.Divider />
         <div className="w-full sm:flex sm:items-center sm:justify-between">
-            <Footer.Copyright href="#" by="Sadia'a blog" year={new Date().getFullYear()} />
+            <Footer.Copyright href="#" by="Sadia's Blog" year={new Date().getFullYear()} />
             <div className="flex gap-5 mt-4 sm:mt-0 sm:justify-center">
                 <Footer.Icon href="#" icon={BsFacebook} />
                 <Footer.Icon href="#" icon={BsTwitter} />

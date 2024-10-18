@@ -1,5 +1,5 @@
 import { Button, Modal, Table } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -147,7 +147,7 @@ export default function DashPosts() {
           )}
         </>
       ) : (
-        <p>You have no posts yet!</p>
+        <p className="flex items-center justify-center min-h-screen font-medium text-red-500">You have no posts yet!</p>
       )}
 
       <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">

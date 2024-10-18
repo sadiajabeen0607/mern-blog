@@ -72,7 +72,7 @@ export default function Header() {
           pill
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === 'light' ? <FaMoon /> : <FaSun size={20} />}
+          {theme === 'light' ? <FaMoon size={20} /> : <FaSun size={20} />}
         </Button>
 
         {currentUser ? (
