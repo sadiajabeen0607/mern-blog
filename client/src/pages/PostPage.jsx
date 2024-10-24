@@ -1,6 +1,7 @@
 import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import CallToAction from "../components/CallToAction";
 
 export default function PostPage() {
   const [post, setPost] = useState(null);
@@ -37,7 +38,7 @@ export default function PostPage() {
   }, [postSlug]);
 
   return (
-    <div>
+    <main>
       {loading ? (
         <div className="min-h-screen flex items-center justify-center">
           <Spinner size="xl" />
@@ -50,7 +51,7 @@ export default function PostPage() {
                 <Button color='gray' pill size={'xs'}>{post && post.category}</Button>
             </Link>
 
-            <img src={post && post.image} alt={post && post.title} className="mt-10 p-3 object-cover max-h-[600px] w-full" />
+            <img src={post && post.image} alt={post && post.title} className="mt-10 object-cover max-h-[600px] w-full max-w-2xl mx-auto" />
 
             <div className="flex justify-between p-3 border-b border-slate-400 max-w-2xl mx-auto w-full text-xs">
                 <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
@@ -60,6 +61,9 @@ export default function PostPage() {
             <div className="p-3 max-w-2xl w-full mx-auto post-content" dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
         </div>
       )}
-    </div>
+      <div className="max-w-4xl mx-auto w-full p-3">
+        <CallToAction />
+      </div>
+    </main>
   );
 }
