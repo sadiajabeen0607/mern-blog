@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import moment from 'moment';
+import moment from "moment";
+import { FaThumbsUp } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, onLike }) {
   const [user, setUser] = useState({});
-//   console.log("comment.userId", comment.userId);
-//   console.log(user);
+  console.log("comment", comment);
+  //   console.log(user);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const getUser = async () => {
@@ -33,10 +37,31 @@ export default function Comment({ comment }) {
       </div>
       <div className="flex-1">
         <div className="flex items-center mb-1">
-          <span className="font-bold mr-1 text-xs truncate">{user ? `@${user.username}` : "anonymous user"}</span>
-          <span className="text-gray-500 text-xs">{moment(comment.createdAt).fromNow()}</span>
+          <span className="font-bold mr-1 text-xs truncate">
+            {user ? `@${user.username}` : "anonymous user"}
+          </span>
+          <span className="text-gray-500 text-xs">
+            {moment(comment.createdAt).fromNow()}
+          </span>
         </div>
         <p className="text-gray-500 pb-2">{comment.content}</p>
+        <div className="flex items-center gap-2 border-t dark:border-gray-700 pt-2 max-w-fit text-xs">
+          <button
+            className={`hover:text-blue-500 ${
+              currentUser &&
+              comment.likes.includes(currentUser._id) ?
+              "text-blue-500" : 'text-gray-400'
+            }`}
+            onClick={() => onLike(comment._id)}
+          >
+            <FaThumbsUp className="text-sm" />
+          </button>
+          <p className="text-gray-400">
+            {
+              comment.numberOfLikes > 0 && comment.numberOfLikes + " " + (comment.numberOfLikes === 1 ? 'like' : 'likes')
+            }
+          </p>
+        </div>
       </div>
     </div>
   );
