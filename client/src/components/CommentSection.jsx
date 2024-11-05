@@ -26,7 +26,7 @@ export default function CommentSection({ postId }) {
         },
         body: JSON.stringify({
           content: comment,
-          postId,  
+          postId,
           userId: currentUser._id,
         }),
       });
@@ -36,7 +36,7 @@ export default function CommentSection({ postId }) {
       if (res.ok) {
         setComment("");
         setCommentError(null);
-        setComments([data, ...comments])
+        setComments([data, ...comments]);
       }
     } catch (error) {
       setCommentError(error.message);
@@ -62,33 +62,44 @@ export default function CommentSection({ postId }) {
     getComments();
   }, [postId]);
 
-  const handleLike = async(commentId) => {
+  const handleLike = async (commentId) => {
     try {
-      if(!currentUser) {
-        navigate('/sign-in');
+      if (!currentUser) {
+        navigate("/sign-in");
         return;
       }
 
       const res = await fetch(`/api/comment/likeComment/${commentId}`, {
-        method: 'PUT',
+        method: "PUT",
       });
 
-      if(res.ok) {
+      if (res.ok) {
         const data = await res.json();
-        setComments(comments.map((comment) => 
-          comment._id === commentId ? {
-            ...comment,
-            likes: data.likes,
-            numberOfLikes: data.likes.length
-          } : comment
-        ))
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOfLikes: data.likes.length,
+                }
+              : comment
+          )
+        );
       }
     } catch (error) {
       console.log(error.message);
-      
     }
-  } 
- 
+  };
+
+  const handleEdit = async (comment, editedComment) => {
+    setComments(
+      comments.map((c) =>
+        c._id === comment._id ? { ...c, content: editedComment } : c
+      )
+    );
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-3 w-full">
       {currentUser ? (
@@ -146,16 +157,15 @@ export default function CommentSection({ postId }) {
         <p className="text-sm my-5">No Comments yet</p>
       ) : (
         <>
-        <div className="flex items-center gap-1 text-sm my-5">
-          <p>Comments</p>
-          <span className="border border-gray-400 py-1 px-2 rounded-sm">
-            {comments.length}
-          </span>
-        </div>
-        {comments.map((comment) =>(
-          <Comment key={comment._id}
-          comment={comment} onLike={handleLike} />
-        ))}
+          <div className="flex items-center gap-1 text-sm my-5">
+            <p>Comments</p>
+            <span className="border border-gray-400 py-1 px-2 rounded-sm">
+              {comments.length}
+            </span>
+          </div>
+          {comments.map((comment) => (
+            <Comment key={comment._id} comment={comment} onLike={handleLike} onEdit={handleEdit} />
+          ))}
         </>
       )}
     </div>
