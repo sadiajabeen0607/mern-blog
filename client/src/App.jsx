@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Signin from "./pages/Signin";
-import SignUo from "./pages/SignUp";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Header from "./components/Header";
@@ -15,6 +14,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 import Search from "./pages/search";
+import SignUp from "./pages/SignUp";
 
 export default function App() {
   return (
@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<SignUo />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
 
         <Route element={<PrivateRoute />}>
