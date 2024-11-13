@@ -7,20 +7,35 @@ import {
   Dropdown,
   Avatar,
 } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signoutSuccess } from "../redux/user/userslice";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const path = useLocation().pathname;
+
+  const [searchTerm, setSearchTerm] = useState('');
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   // console.log("currentUser", currentUser);
   // console.log("image", currentUser.profilePicture);
+// console.log('searchTerm',searchTerm);
+
+  useEffect(() => {
+    const useParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = useParams.get('searchTerm');
+    if(searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    };
+    
+  }, [location.search]);
 
   const handleSignout = async() => {
     try {
@@ -40,6 +55,13 @@ export default function Header() {
     }
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  }
   return (
     <Navbar className="border-b-2">
       <Link
@@ -52,12 +74,14 @@ export default function Header() {
         Blog
       </Link>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
           placeholder="Search..."
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         ></TextInput> 
       </form>
 
@@ -119,4 +143,4 @@ export default function Header() {
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
