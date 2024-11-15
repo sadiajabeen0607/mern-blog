@@ -12,7 +12,7 @@ import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
-import Search from "./pages/search";
+import Search from "./pages/Search";
 import SignUp from "./pages/SignUp";
 
 export default function App() {
