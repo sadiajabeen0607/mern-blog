@@ -1,7 +1,6 @@
 import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
 
@@ -97,10 +96,10 @@ export default function PostPage() {
           <div
             className="p-3 max-w-2xl w-full mx-auto post-content"
             dangerouslySetInnerHTML={{ __html: post && post.content }}
-          ></div>
-          <div className="max-w-4xl mx-auto w-full p-3">
-            <CallToAction />
+          >
+          
           </div>
+         
 
           <CommentSection postId={post._id} />
 

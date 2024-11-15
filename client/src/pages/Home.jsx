@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CallToAction from "../components/CallToAction";
 import PostCard from "../components/PostCard";
 
 export default function Home() {
@@ -26,9 +25,9 @@ export default function Home() {
 
   return (
     <div>
-      <div className="max-w-6xl mx-auto flex flex-col gap-6 p-28 px-3">
-        <h1 className="font-bold text-3xl lg:text-6xl">Welcome to my Blog</h1>
-        <p className="text-ray-500 text-xs sm:text-sm">
+      <div className="max-w-[85rem] mx-auto flex flex-col gap-6 p-28 px-3">
+        <h1 className="font-bold text-3xl lg:text-6xl text-center mb-4">Welcome to my Blog</h1>
+        <p className="text-gray-500 text-xs sm:text-sm text-center">
           Dive into a world of knowledge, wellness, and creativity with our
           diverse range of topics. Whether you&apos;re seeking tips for a
           healthier lifestyle, delicious recipes to try, fresh insights into
@@ -42,14 +41,10 @@ export default function Home() {
         </p>
         <Link
           to="/search"
-          className="text-xs sm:text-sm text-teal-500 font-bold hover:underline"
+          className="text-xs sm:text-sm text-teal-500 font-bold hover:underline text-center"
         >
           View all posts
         </Link>
-      </div>
-
-      <div className="p-3 bg-amber-100 dark;bg-slate-700">
-        <CallToAction />
       </div>
 
       <div className="flex flex-col p-3 max-w-[85rem] mx-auto py-7 gap-8 items-center justify-center">
